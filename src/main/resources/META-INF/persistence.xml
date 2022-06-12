@@ -6,6 +6,8 @@
     
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>com.devpredator.projectjpa.entity.Disquera</class>
+		<class>com.devpredator.projectjpa.entity.Genero</class>
+		<class>com.devpredator.projectjpa.entity.SubGenero</class>
 		
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>

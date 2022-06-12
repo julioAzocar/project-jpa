@@ -78,4 +78,33 @@ class DisqueraDAOImplTest {
 		
 	}
 
+
+	@Test
+	void testconsultarByDescripcion() {
+		DisqueraDAO disqueraDAO = new DisqueraDAOImpl();
+		
+		String descripcion = "MegaForce5";
+		
+		Disquera disquera =  disqueraDAO.consultarByDescripcionJPQL(descripcion);
+		
+		assertNotNull(disquera);
+		
+		System.out.println("Disquera : " + disquera.getDescripcion());
+
+	}
+	
+	@Test
+	void testconsultarByDescripcionSQL() {
+		DisqueraDAO disqueraDAO = new DisqueraDAOImpl();
+		
+		String descripcion = "MegaForce5";
+		
+		Disquera disquera =  disqueraDAO.consultarByDescripcionSQL(descripcion);
+		
+		assertNotNull(disquera);
+		
+		System.out.println("Disquera : " + disquera.getDescripcion());
+
+	}
+	
 }

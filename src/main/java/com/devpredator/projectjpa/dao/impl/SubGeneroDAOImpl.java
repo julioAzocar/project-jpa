@@ -1,8 +1,6 @@
 package com.devpredator.projectjpa.dao.impl;
 
 import java.util.List;
-import com.devpredator.projectjpa.dao.DisqueraDAO;
-import com.devpredator.projectjpa.entity.Disquera;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -11,22 +9,27 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
+import com.devpredator.projectjpa.dao.SubGeneroDAO;
+import com.devpredator.projectjpa.entity.Disquera;
+import com.devpredator.projectjpa.entity.SubGenero;
 
-public class DisqueraDAOImpl implements DisqueraDAO {
-	
+public class SubGeneroDAOImpl implements SubGeneroDAO {
+
 	//carga toda la info de persistence.xml es constante
 	private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence
 			.createEntityManagerFactory("persistenceDevPredator");
 
+	
 	@Override
-	public void guardar(Disquera disquera) {
+	public void guardar(SubGenero subgenero) {
 		// TODO Auto-generated method stub
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		EntityTransaction et = em.getTransaction();
-		et.begin();
+		
 		
 		try {
-			em.persist(disquera);
+			et.begin();
+			em.persist(subgenero);
 			et.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -37,17 +40,20 @@ public class DisqueraDAOImpl implements DisqueraDAO {
 		}finally {
 			em.close();
 		}
+		
+
 	}
 
 	@Override
-	public void actualizar(Disquera disquera) {
+	public void actualizar(SubGenero subgenero) {
+		// TODO Auto-generated method stub
 		// TODO Auto-generated method stub
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		EntityTransaction et = em.getTransaction();
-		et.begin();
 		
 		try {
-			em.merge(disquera);
+			et.begin();
+			em.merge(subgenero);
 			et.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -58,22 +64,19 @@ public class DisqueraDAOImpl implements DisqueraDAO {
 		}finally {
 			em.close();
 		}
-		
 	}
 
 	@Override
 	public void eliminar(Long id) {
-
-
+		// TODO Auto-generated method stub
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-		
-		Disquera disqueraConsulta = em.find(Disquera.class, id);
-		
 		EntityTransaction et = em.getTransaction();
-		et.begin();
+		
+		SubGenero subgenero = em.find(SubGenero.class, id);
 		
 		try {
-			em.remove(disqueraConsulta);
+			et.begin();
+			em.remove(subgenero);
 			et.commit();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -84,67 +87,32 @@ public class DisqueraDAOImpl implements DisqueraDAO {
 		}finally {
 			em.close();
 		}
-		
 	}
 
 	@Override
-	public List<Disquera> Consultar() {
+	public List<SubGenero> Consultar() {
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		
-		TypedQuery <Disquera> disquerasQuery= (TypedQuery<Disquera>) em.createQuery("FROM Disquera ORDER BY descripcion");
+		TypedQuery <SubGenero> Consulta= (TypedQuery<SubGenero>) em.createQuery("FROM SubGenero ORDER BY descripcion");
 		
-		return disquerasQuery.getResultList();
-
+		return Consulta.getResultList();
 	}
 
 	@Override
-	public Disquera consultarById(Long id) {
+	public SubGenero consultarById(Long id) {
 		// TODO Auto-generated method stub
 		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
 		
-		Disquera disqueraConsulta = em.find(Disquera.class, id);
+		SubGenero Consulta = em.find(SubGenero.class, id);
 		
-		if (disqueraConsulta == null) {
+		if (Consulta == null) {
 			
 			throw new EntityNotFoundException("Entidad no encontrada");
 			
 			
 		}
 
-		return disqueraConsulta;
+		return Consulta;
 	}
 
-	@Override
-	public Disquera consultarByDescripcionJPQL(String descripcion) {
-		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-		
-		TypedQuery<Disquera> disquerasQuery = (TypedQuery<Disquera>) em.createQuery("FROM Disquera WHERE descripcion = :desc");
-		
-		disquerasQuery.setParameter("desc", descripcion);
-		
-		//return disquerasQuery.getResultList();
-		
-		return disquerasQuery.getSingleResult();
-		
-		
-	}
-
-	@Override
-	public Disquera consultarByDescripcionSQL(String descripcion) {
-		EntityManager em = ENTITY_MANAGER_FACTORY.createEntityManager();
-		
-		String strSql = "SELECT * FROM Disquera WHERE descripcion = :desc";
-		//String strSql = "SELECT * FROM Disquera WHERE descripcion = ?";
-		TypedQuery<Disquera> disquerasQuery = (TypedQuery<Disquera>) em.createNativeQuery(strSql, Disquera.class);
-		
-		disquerasQuery.setParameter("desc", descripcion);
-		//disquerasQuery.setParameter(1, descripcion);
-		
-		//return disquerasQuery.getResultList();
-		
-		return disquerasQuery.getSingleResult();
-		
-		
-	}
-	
 }
